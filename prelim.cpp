@@ -12,8 +12,7 @@
 using namespace std;
 
 //global variables
-std::mutex mu;   //instance of mutual exclusion lock
-std::condition_variable cond;  //instance of a condition variable for wait and notify_all
+std::condition_variable cond; //instance of a condition variable for wait and notify_all
 std::unique_lock<std::mutex> locker;
 const int PSLEEP = 1; //producer thread sleep period
 const int CSLEEP = 1; //consumer thread sleep period
@@ -86,8 +85,8 @@ class Buffer {
     }
   } // end consumerTerminated method
 
-    // Used to tell buffer when a producer thread has terminated
-    // This prevents deadlock (consumers waiting when producers have finished)
+  // Used to tell buffer when a producer thread has terminated
+  // This prevents deadlock (consumers waiting when producers have finished)
   void producerTerminated() {
     std::unique_lock<std::mutex> get_lock(buf_mu);
     if (--activeProducers == 0) {

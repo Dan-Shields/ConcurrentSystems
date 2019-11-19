@@ -244,7 +244,7 @@ class ADC {
     //Returns sample from ADC
     double sampleADC() {
       std::unique_lock<std::mutex> locker(ADC_mu);
-      
+
       double sample = adcChannels[sampleChannel].getCurrentSample();
 
       cout << "Thread " << getThreadId() << " got ADC sample value of: " << sample << endl;
@@ -278,6 +278,7 @@ void run(ADC& theADC, LinkAccessController& theLAC, int id) {
 
   for (int i = 0; i < DATA_BLOCK_SIZE; i++) {
     theADC.requestADC(id);
+
 
     sampleBlock[i] = theADC.sampleADC();
 
